@@ -29,7 +29,7 @@ export function ChatMessage({ message, isLast }: ChatMessageProps) {
   return (
     <div 
       ref={messageRef}
-      className="flex items-start gap-4 p-2 rounded-lg"
+      className="flex items-start gap-4"
     >
       {/* Avatar with improved styling */}
       <div className="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden flex items-center justify-center shadow-lg">
@@ -46,13 +46,13 @@ export function ChatMessage({ message, isLast }: ChatMessageProps) {
       
       {/* Message content with improved styling */}
       <div className={`flex-1 overflow-hidden ${isUser ? 'pr-4' : 'pr-6'}`}>
-        <div className={`prose prose-invert max-w-none p-1 ${isUser ? '' : 'pb-2'}`}>
+        <div className="prose prose-invert max-w-none">
           {typeof content === "string" ? (
             <ReactMarkdown
               components={{
-                p: ({ node, ...props }) => <p className="mb-4 last:mb-0 text-[15px] leading-relaxed" {...props} />,
-                ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4 space-y-1 rounded-md" {...props} />,
-                ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-4 space-y-1 rounded-md" {...props} />,
+                p: ({ node, ...props }) => <p className="mb-2 last:mb-0 text-[15px] leading-relaxed" {...props} />,
+                ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-2 space-y-1 rounded-md" {...props} />,
+                ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-2 space-y-1 rounded-md" {...props} />,
                 li: ({ node, ...props }) => <li className="mb-1 text-[15px]" {...props} />,
                 code: ({ node, className, children, ...props }) => {
                   const match = /language-(\w+)/.exec(className || '');

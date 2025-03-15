@@ -217,9 +217,9 @@ export function ChatInterface() {
   return (
     <div className="flex flex-col h-full items-center justify-center">
       {/* Centered Container with improved rounded corners and shadow */}
-      <div className="w-full max-w-3xl mx-auto flex flex-col bg-[#343541] rounded-2xl shadow-2xl overflow-hidden border border-white/10" style={{ maxHeight: '80vh', boxShadow: '0 0 40px rgba(0, 0, 0, 0.3)' }}>
+      <div className="w-full max-w-3xl mx-auto flex flex-col bg-[#343541] rounded-2xl shadow-2xl overflow-hidden" style={{ maxHeight: '80vh', boxShadow: '0 0 40px rgba(0, 0, 0, 0.3)' }}>
         {/* Messages - Scrollable section */}
-        <div className="flex-1 overflow-y-auto p-1 md:p-2" style={{ maxHeight: '60vh' }}>
+        <div className="flex-1 overflow-y-auto p-0" style={{ maxHeight: '60vh' }}>
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center max-w-xl px-6">
@@ -244,18 +244,41 @@ export function ChatInterface() {
             </div>
           ) : (
             <div className="w-full">
-              {messages.map((message, index) => (
+              {/* Group messages by role to avoid separation lines */}
+              {messages.reduce((groups, message, index) => {
+                const lastGroup = groups[groups.length - 1];
+                
+                // If this is the first message or the role is different from the last group
+                if (!lastGroup || lastGroup.role !== message.role) {
+                  // Start a new group
+                  groups.push({
+                    role: message.role,
+                    messages: [{ message, index }]
+                  });
+                } else {
+                  // Add to the existing group
+                  lastGroup.messages.push({ message, index });
+                }
+                
+                return groups;
+              }, [] as { role: string, messages: { message: Message, index: number }[] }[]).map((group, groupIndex) => (
                 <div 
-                  key={message.id || index}
-                  className={`${message.role === 'assistant' ? 'bg-[#444654]' : 'bg-[#343541]'} py-4 px-2 md:px-4`}
-                  style={{ transition: 'background-color 0.3s ease' }}
+                  key={groupIndex}
+                  className="w-full"
+                  style={{ 
+                    backgroundColor: group.role === 'assistant' ? '#444654' : '#343541',
+                  }}
                 >
-                  <div className="max-w-3xl mx-auto">
-                    <ChatMessage 
-                      message={message} 
-                      isLast={index === messages.length - 1} 
-                    />
-                  </div>
+                  {group.messages.map(({ message, index }) => (
+                    <div key={message.id || index} className="py-2 px-2 md:px-4">
+                      <div className="max-w-3xl mx-auto">
+                        <ChatMessage 
+                          message={message} 
+                          isLast={index === messages.length - 1} 
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
               <div ref={messagesEndRef} />
@@ -271,7 +294,7 @@ export function ChatInterface() {
         )}
         
         {/* Input area with improved styling */}
-        <div className="p-2 md:p-4 bg-[#343541] border-t border-white/10">
+        <div className="p-2 md:p-4 bg-[#343541]">
           <div className="max-w-3xl mx-auto">
             <ChatInput 
               onSend={handleSendMessage} 
