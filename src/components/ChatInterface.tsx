@@ -247,7 +247,8 @@ export function ChatInterface() {
               {messages.map((message, index) => (
                 <div 
                   key={message.id || index}
-                  className={`${message.role === 'assistant' ? 'bg-[#444654]' : 'bg-[#343541]'} py-4 px-2 md:px-4 rounded-lg mb-1`}
+                  className={`${message.role === 'assistant' ? 'bg-[#444654]' : 'bg-[#343541]'} py-4 px-2 md:px-4`}
+                  style={{ transition: 'background-color 0.3s ease' }}
                 >
                   <div className="max-w-3xl mx-auto">
                     <ChatMessage 
