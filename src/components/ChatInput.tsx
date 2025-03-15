@@ -37,7 +37,7 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
   
   return (
     <div className="relative">
-      <div className="relative rounded-xl border border-white/10 bg-[#40414F] shadow-sm">
+      <div className="relative rounded-xl border border-white/10 bg-[#40414F] shadow-sm hover:border-white/20 transition-colors">
         <textarea
           ref={textareaRef}
           value={message}
@@ -45,16 +45,17 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
           onKeyDown={handleKeyDown}
           placeholder="Message GPT-4o mini..."
           rows={1}
-          className="w-full py-3 pl-4 pr-12 max-h-[120px] resize-none bg-transparent border-0 outline-none focus:ring-0 text-white rounded-xl"
+          className="w-full py-3.5 pl-4 pr-12 max-h-[120px] resize-none bg-transparent border-0 outline-none focus:ring-0 text-white rounded-xl text-[15px]"
           disabled={isLoading}
+          style={{ boxShadow: 'none' }}
         />
         
         <button
           onClick={handleSend}
           disabled={!message.trim() || isLoading}
-          className={`absolute right-2 bottom-2 p-1 rounded-md ${
+          className={`absolute right-2.5 bottom-2.5 p-1.5 rounded-lg transition-colors ${
             message.trim() && !isLoading
-              ? "text-white hover:bg-white/10"
+              ? "text-white hover:bg-white/10 active:bg-white/20"
               : "text-gray-400 cursor-not-allowed"
           }`}
         >
@@ -72,6 +73,13 @@ export function ChatInput({ onSend, isLoading }: ChatInputProps) {
           </svg>
         </button>
       </div>
+      
+      {/* Character count indicator - only show when typing */}
+      {message.length > 0 && (
+        <div className="absolute right-3 -bottom-6 text-xs text-gray-400">
+          {message.length} characters
+        </div>
+      )}
     </div>
   );
 } 

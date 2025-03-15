@@ -47,9 +47,9 @@ export function ChatLayout() {
       />
       
       {/* Main Chat Area */}
-      <div className="flex flex-col flex-1 h-full overflow-hidden relative">
-        {/* Chat Interface */}
-        <div className="flex-1 overflow-hidden">
+      <div className="flex-1 flex items-center justify-center overflow-hidden relative">
+        {/* Centered chat container */}
+        <div className="w-full h-full flex items-center justify-center p-4">
           <ChatInterface />
         </div>
       </div>

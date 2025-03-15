@@ -17,10 +17,10 @@ export function TypingAnimation() {
   }, []);
   
   return (
-    <div className="flex items-center space-x-1">
-      <div className="w-2 h-2 rounded-full bg-white/40 animate-pulse"></div>
-      <div className="w-2 h-2 rounded-full bg-white/40 animate-pulse delay-150"></div>
-      <div className="w-2 h-2 rounded-full bg-white/40 animate-pulse delay-300"></div>
+    <div className="flex items-center space-x-1.5">
+      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 animate-pulse"></div>
+      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 animate-pulse delay-150"></div>
+      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 animate-pulse delay-300"></div>
     </div>
   );
 } 
